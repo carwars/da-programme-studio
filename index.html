@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090a0e">
+<title>DA Studio · Concepteur de programmes</title>
+<style>
+:root{color-scheme:dark;--bg:#090a0e;--panel:#111319;--panel2:#171a22;--panel3:#20232c;--line:#292c36;--muted:#8e919f;--white:#f5f5f8;--red:#f32736;--radius:17px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--white);font:14px/1.45 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #fc5966;outline-offset:2px}
+.app{max-width:1660px;margin:auto;padding:0 26px 36px}
+.topbar{height:86px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:16px}
+.brand{display:flex;align-items:center;gap:13px}.brand img{width:66px;height:53px;object-fit:contain}.brand strong{display:block;font-size:18px;letter-spacing:.07em}.brand small{display:block;color:var(--muted);text-transform:uppercase;font-size:10px;letter-spacing:.24em}
+.topright{display:flex;align-items:center;gap:10px}.eyebrow{color:#ff6470;font-size:11px;letter-spacing:.19em;text-transform:uppercase;font-weight:750}.hero{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:32px 0 25px}.hero h1{font-size:clamp(27px,3.3vw,44px);line-height:1.1;letter-spacing:-.045em;margin:6px 0 10px}.hero h1 span{color:var(--red)}.hero p{margin:0;color:var(--muted);max-width:670px}
+.btn{background:#252730;border:1px solid #383a44;border-radius:10px;color:#fff;padding:10px 14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}.btn:hover{background:#333642}.btn.primary{background:var(--red);border-color:var(--red)}.btn.primary:hover{background:#d81727}.btn.ghost{background:transparent}.btn.small{padding:7px 10px;font-size:12px}.btn:disabled{opacity:.45;cursor:not-allowed}
+.layout{display:grid;grid-template-columns:minmax(290px,.96fr) minmax(390px,1.22fr) minmax(390px,1.14fr);gap:17px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);min-width:0;overflow:hidden}.panel-head{padding:19px 20px 15px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px}.panel-head h2{font-size:16px;margin:0;letter-spacing:-.015em}.panel-head small{color:var(--muted)}.pad{padding:19px}
+.field{margin-bottom:15px}.field label{display:block;color:#acafbb;font-size:11px;text-transform:uppercase;font-weight:750;letter-spacing:.1em;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;background:#1b1d26;border:1px solid #343642;color:var(--white);border-radius:9px;padding:11px 12px;outline:none}.field textarea{min-height:70px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:#d22634}.field input::placeholder,.field textarea::placeholder{color:#6f7481}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:11px}.sectiontitle{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:21px 0 12px}.sectiontitle strong{font-size:13px}.pill{display:inline-block;border:1px solid #45404a;color:#e8d1d4;background:#302025;padding:4px 8px;border-radius:99px;font-size:11px}
+.goal-options{display:flex;flex-wrap:wrap;gap:8px}.goal-option{display:inline-flex;align-items:center;gap:7px;border:1px solid #3a3c48;background:#20222b;color:#c9cad1;border-radius:9px;padding:9px 11px;font-size:12px;cursor:pointer}.goal-option:has(input:checked){border-color:#e33b47;background:#4c171e;color:#fff}.goal-option input{width:15px;height:15px;margin:0;accent-color:#f32736}.goal-option:focus-within{outline:2px solid #fc5966;outline-offset:2px}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border-radius:9px;padding:9px 11px;border:1px solid #3a3c48;background:#20222b;color:#c9cad1;font-size:12px;font-weight:750;display:flex;align-items:center;gap:7px}.chip:before{content:"";width:7px;height:7px;border-radius:50%;background:#666a75}.chip.selected{border-color:#e33b47;background:#4c171e;color:#fff}.chip.selected:before{background:#ff4050;box-shadow:0 0 10px #ff2837}.hint{font-size:12px;color:var(--muted);margin-top:12px}
+.anatomy{position:relative;background:radial-gradient(ellipse at 50% 44%,#2d1720 0%,#171820 37%,#101218 74%);height:530px;overflow:hidden}.anatomy:before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 96%,#ffffff07 97%),linear-gradient(90deg,transparent 96%,#ffffff07 97%);background-size:39px 39px;opacity:.5;pointer-events:none}.anatomy canvas{position:relative;display:block;width:100%;height:100%;touch-action:pan-y;cursor:grab}.anatomy canvas:active{cursor:grabbing}.anatomy-label{position:absolute;top:17px;left:17px;z-index:1;border:1px solid #ffffff24;background:#0b0b11b8;border-radius:8px;padding:7px 10px;font-size:11px;color:#ddd;pointer-events:none}.anatomy-bottom{position:absolute;bottom:15px;left:15px;right:15px;display:flex;align-items:center;justify-content:space-between;gap:5px}.switch{display:flex;align-items:center;gap:7px;background:#11131bcf;border:1px solid #343541;padding:7px 9px;border-radius:9px;color:#eee;font-size:11px;cursor:pointer}.switch input{accent-color:var(--red)}.round{width:32px;height:32px;border:1px solid #42434c;border-radius:9px;background:#171922e3;color:white}.legend{padding:13px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:11px}.dot{display:inline-block;width:8px;height:8px;background:var(--red);border-radius:50%;margin-right:5px}
+.sessions{padding:17px}.session-tabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:9px}.session-tab{background:#20222a;border:1px solid #393a46;border-radius:9px;padding:9px 12px;color:#b9bac4;white-space:nowrap;font-weight:700;font-size:12px}.session-tab.active{color:#fff;background:#572029;border-color:#c63342}.tab-add{min-width:34px}.session-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0}.session-header input{background:transparent;border:0;color:#fff;font-size:16px;font-weight:800;min-width:0;width:100%;border-bottom:1px solid transparent;padding:5px}.session-header input:focus{border-color:#f32736;outline:none}.session-header button{border:0;background:transparent;color:#9698a3}.empty{background:#181a22;border:1px dashed #41434e;border-radius:13px;padding:35px 15px;text-align:center;color:#a0a2ad}.empty b{display:block;color:#fff;margin-bottom:5px}
+.cardio-box{margin:10px 0 16px;padding:14px;border:1px solid #353741;background:#171921;border-radius:13px}.cardio-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.heart{display:inline-flex;align-items:center;gap:8px;font-weight:800}.heart .icon{font-size:19px;color:#ff4a5c}.cardio-value{font-weight:800;color:#fff}.cardio-range{width:100%;accent-color:#f32736}.cardio-scale{display:flex;justify-content:space-between;color:#8f93a0;font-size:11px;margin-top:4px}
+.session-toolbar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:10px 0 4px}.session-toolbar strong{font-size:13px}
+.item{border:1px solid #383a45;background:#1b1d26;border-radius:12px;padding:13px;margin:10px 0}.item-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.item-top strong{font-size:12px}.item-actions{display:flex;gap:4px}.item-actions button{background:transparent;color:#aaa;border:0;font-size:16px;padding:4px 6px}.item-fields{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}.item-fields label{font-size:10px;color:#aeb0bc}.item-fields input,.item-fields textarea{display:block;width:100%;background:#111219;border:1px solid #343640;border-radius:7px;color:white;padding:9px;margin-top:4px}.item-fields textarea{min-height:62px;resize:vertical}
+.session-summary{border-top:1px solid var(--line);padding:16px 19px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.metric{border:1px solid #353741;background:#1b1d26;border-radius:10px;padding:11px}.metric b{display:block;font-size:20px}.metric span{font-size:11px;color:#a5a7b1}
+.actions{padding:16px 18px;border-top:1px solid var(--line);display:grid;gap:8px}.actions .btn{width:100%}.actions-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.footnote{font-size:11px;color:#7d808c;padding:13px 18px 20px}.bottom{margin-top:20px;display:flex;justify-content:space-between;color:#777986;font-size:11px;gap:14px}.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);background:#fff;color:#191a21;border-radius:10px;padding:12px 18px;font-weight:750;box-shadow:0 10px 30px #000a;opacity:0;pointer-events:none;transition:.2s;z-index:10}.toast.show{opacity:1;transform:translate(-50%,0)}
+.validation-errors{padding:13px 16px;background:#41171e;border:1px solid #ef5665;border-radius:10px;color:#fff;font-size:12px;line-height:1.65}.validation-errors[hidden]{display:none}.validation-errors strong{display:block;margin-bottom:3px}.validation-errors ul{margin:0;padding-left:20px}.field-invalid{border-color:#ff5262!important;box-shadow:0 0 0 1px #ff5262}.modal-back{position:fixed;inset:0;background:#000b;z-index:12;display:none;align-items:center;justify-content:center;padding:18px}.modal-back.open{display:flex}.modal{width:min(520px,100%);max-height:90vh;overflow:auto;background:#171921;border:1px solid #454650;border-radius:17px;padding:24px}.modal h2{margin:0 0 8px}.modal p{color:#adafba}.modal .btn{margin:4px 3px 4px 0}.modal textarea{width:100%;height:125px;background:#0f1118;border:1px solid #393b45;color:white;border-radius:9px;padding:12px;resize:vertical}.modal-close{float:right;background:none;border:0;color:#ccc;font-size:23px}.mobile-jump{display:none}
+@media(max-width:1200px){.layout{grid-template-columns:minmax(280px,.9fr) minmax(360px,1.2fr)}.program-panel{grid-column:1/-1}}
+@media(max-width:760px){.app{padding:0 12px 20px}.topbar{height:72px}.brand img{width:53px;height:42px}.brand strong{font-size:14px}.brand small{font-size:8px}.topright .hide-mobile{display:none}.hero{display:block;margin:25px 4px 18px}.hero h1{font-size:31px}.layout{display:block}.panel{margin:12px 0}.anatomy{height:460px}.session-summary{grid-template-columns:1fr}.actions-row,.two{grid-template-columns:1fr}.bottom{display:block}.mobile-jump{display:inline-flex}.hide-mobile{display:none}}
+@media print{body{background:#fff;color:#000}.topbar,.hero,.anatomy,.actions,.bottom,.chip,.btn,.mobile-jump{display:none!important}.layout{display:block}.panel{background:#fff;color:#000;border:0}.item{color:#000;background:#fff}.item input,.item textarea{color:#000}.app{max-width:none}}
+</style>
+</head>
+<body><div class="app">
+<header class="topbar"><div class="brand"><img src="assets/logo-da.png" alt="Logo Discipline Athletic"><div><strong>DISCIPLINE ATHLETIC</strong><small>Studio de programmation</small></div></div><div class="topright"><span class="pill hide-mobile">ÉDITION COACH</span><button class="btn small ghost hide-mobile" id="newBtn">＋ Nouveau programme</button><button class="btn small primary" id="shareTop">⇧ Partager</button></div></header>
+<section class="hero"><div><div class="eyebrow">DA / PROGRAMME STUDIO</div><h1>Construis chaque séance.<br><span>Visualise chaque muscle.</span></h1><p>Crée tes programmes sur mesure, mets en évidence les groupes musculaires, ajoute un repère cardio et partage une fiche d'entraînement propre à ton élève.</p></div><button class="btn small mobile-jump" onclick="document.getElementById('program-panel').scrollIntoView({behavior:'smooth'})">Voir le programme ↓</button></section>
+<main class="layout">
+<section class="panel"><div class="panel-head"><div><h2>01 / Paramètres du programme</h2><small>Personnalisation du suivi</small></div><span class="pill">COACH</span></div><div class="pad">
+<div class="field"><label for="programName">Nom du programme</label><input id="programName" placeholder="Ex. Semaine 7 · Haut du corps"></div>
+<div class="field"><label for="client">Athlète / bénéficiaire</label><input id="client" placeholder="Ex. Eric"></div>
+<div class="field"><label>Objectifs (plusieurs choix possibles)</label><div class="goal-options" id="goalOptions" role="group" aria-label="Objectifs du programme"></div></div><div class="field"><label for="duration">Durée (semaines)</label><input id="duration" type="number" min="1" max="52" placeholder="Ex. 4"></div>
+<div class="field"><label for="notes">Consignes du coach · musculation</label><textarea id="notes" placeholder="Ex. Tempo contrôlé, récupération, recommandations particulières…"></textarea></div>
+<div class="sectiontitle"><strong>Groupes musculaires</strong><span class="pill" id="selectedCount">0 sélectionné</span></div><div class="chips" id="muscleChips"></div><p class="hint">Sélectionne un ou plusieurs groupes pour les mettre en rouge sur le mannequin. Tu peux aussi le faire pivoter avec la souris.</p>
+<div class="sectiontitle"><strong>Répartition de la semaine</strong></div><div class="hint" id="weekInfo" style="margin:0">1 séance programmée</div>
+</div></section>
+<section class="panel"><div class="panel-head"><div><h2>02 / Explorateur musculaire 3D</h2><small>Rotation interactive · mise en évidence anatomique</small></div><span class="pill">3D</span></div><div class="anatomy"><div class="anatomy-label" id="modelStatus">● MODÈLE INTERACTIF</div><canvas id="bodyCanvas" aria-label="Mannequin musculaire en trois dimensions. Les muscles sélectionnés sont rouges."></canvas><div class="anatomy-bottom"><label class="switch"><input id="rotate" type="checkbox" checked> Rotation automatique</label><div><button class="round" id="frontBtn" title="Vue de face" aria-label="Vue de face">F</button><button class="round" id="backBtn" title="Vue de dos" aria-label="Vue de dos">D</button></div></div></div><div class="legend"><span><i class="dot"></i> Muscles ciblés <span style="padding-left:10px">◯ Muscles non ciblés</span></span><span>Glisse pour pivoter</span></div></section>
+<section class="panel program-panel" id="program-panel"><div class="panel-head"><div><h2>03 / Constructeur de programme</h2><small>Séances, cardio et consignes d'exécution</small></div><span class="pill" id="sessionCount">1 SÉANCE</span></div><div class="sessions"><div class="session-tabs" id="sessionTabs"></div><div class="session-header"><input id="sessionName" aria-label="Nom de la séance" placeholder="Ex. Séance 1 — Haut du corps"><button id="deleteSession" title="Supprimer la séance" aria-label="Supprimer la séance">✕</button></div>
+<div class="cardio-box"><div class="cardio-top"><div class="heart"><span class="icon">❤</span> Cardio</div><div class="cardio-value" id="cardioValue">0 min</div></div><input class="cardio-range" id="cardioRange" type="range" min="0" max="60" step="5" value="0" aria-label="Durée du cardio"><div class="cardio-scale"><span>0 min</span><span>1 h</span></div></div>
+<div class="session-toolbar"><strong>Exercices / mouvements</strong><button class="btn small" id="addExerciseBtn">＋ Ajouter un exercice</button></div><div class="session-items" id="sessionItems"></div></div><div class="session-summary"><div class="metric"><b id="exerciseMetric">0</b><span>Exercices dans la séance</span></div><div class="metric"><b id="cardioMetric">0 min</b><span>Cardio de la séance</span></div><div class="metric"><b id="muscleMetric">0</b><span>Groupes musculaires ciblés</span></div></div><div class="actions"><button class="btn primary" id="shareBtn">⇧ Exporter / partager le programme</button><div class="actions-row"><button class="btn" id="saveBtn">↓ Sauvegarder JSON</button><button class="btn" id="importBtn">↑ Importer JSON</button></div><div class="actions-row"><button class="btn" id="copyBtn">▤ Copier le texte</button><button class="btn" id="imageBtn">▧ Fiche PNG</button></div><button class="btn ghost" id="printBtn">⎙ Imprimer / PDF</button></div><div class="validation-errors" id="validationErrors" role="alert" aria-live="assertive" tabindex="-1" hidden></div><div class="footnote">Le formulaire repart à zéro à chaque ouverture. Exporte un JSON pour conserver ton programme et le réimporter ensuite.</div></section>
+</main><footer class="bottom"><span>© Discipline Athletic — Programme Studio · Version 1.5</span><span>Conçu pour l'accompagnement sportif · Un programme se personnalise selon les capacités de l'athlète.</span></footer></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div><input id="fileInput" type="file" accept=".json,application/json" hidden>
+<div class="modal-back" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareTitle"><div class="modal"><button class="modal-close" id="closeModal" aria-label="Fermer">×</button><div class="eyebrow">DISCIPLINE ATHLETIC</div><h2 id="shareTitle">Partager le programme</h2><p>Deux usages : une <b>fiche visuelle PNG</b> à envoyer à l'athlète, ou un <b>fichier JSON</b> qu'un autre coach peut importer dans cette application pour retrouver toutes les données.</p><div><button class="btn primary" id="modalPng">▧ Télécharger la fiche PNG</button><button class="btn" id="modalJson">↓ Télécharger le JSON</button><button class="btn" id="modalCopy">▤ Copier le programme</button></div><p style="font-size:12px">Pour l'envoyer à Frédéric : télécharge la fiche puis joins-la à ton message. Tu peux également copier le récapitulatif ci-dessous.</p><textarea id="shareText" readonly aria-label="Texte récapitulatif du programme"></textarea><p style="font-size:11px">Le partage automatique par lien nécessite un hébergement et, pour synchroniser les modifications entre personnes, un service de stockage.</p></div></div>
+<script>
+'use strict';
+const GOALS=['Hypertrophie','Force','Remise en forme','Perte de masse grasse','Endurance musculaire','Mobilité','Condition physique','Récupération'];
+const MUSCLES=[['pectoraux','Pectoraux'],['dos','Dos'],['epaules','Épaules'],['biceps','Biceps'],['triceps','Triceps'],['abdominaux','Abdominaux'],['quadriceps','Quadriceps'],['ischios','Ischio-jambiers'],['fessiers','Fessiers'],['mollets','Mollets']];
+const FRONT_MUSCLES=['pectoraux','epaules','biceps','triceps','abdominaux','quadriceps','mollets'];
+const BACK_MUSCLES=['dos','epaules','triceps','ischios','fessiers','mollets'];
+const $=id=>document.getElementById(id);
+const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fresh=()=>({version:3,name:'',client:'',goals:[],duration:'',notes:'',selected:[],sessions:[{name:'Séance 1',cardio:0,items:[{name:'',details:''}]}],active:0});
+let state=fresh(); // Session neuve à chaque ouverture (aucune restauration automatique).
+function valid(s){return s&&typeof s==='object'&&Array.isArray(s.sessions)&&s.sessions.length>0&&s.sessions.every(x=>x&&typeof x.name==='string'&&Array.isArray(x.items)&&typeof x.cardio!=='undefined')&&Array.isArray(s.selected)}
+function persist(){if(document.getElementById('validationErrors')?.hidden===false)clearValidation()} // Les données restent en mémoire jusqu'à la fermeture de la page.
+let toastTimer;function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2500)}
+function sessionLabel(index){return state.sessions[index]?.name?.trim()||`Séance ${index+1}`}
+function currentSession(){return state.sessions[state.active]}
+function formatCardio(min){min=Number(min)||0;if(min<=0)return '0 min';if(min===60)return '1 h';if(min>60){const h=Math.floor(min/60),m=min%60;return h+' h'+(m?' '+m+' min':'')}return min+' min'}
+function syncForm(){ $('programName').value=state.name||'';$('client').value=state.client||'';renderGoals();$('duration').value=state.duration||'';$('notes').value=state.notes||'';renderChips();renderTabs();renderItems();updateModel();}
+for(const [id,key] of [['programName','name'],['client','client'],['duration','duration'],['notes','notes']]){$(id).addEventListener('input',e=>{state[key]=e.target.value;persist()})}
+function renderGoals(){
+ const targets=Array.isArray(state.goals)?state.goals:[];
+ $('goalOptions').innerHTML=GOALS.map(label=>`<label class="goal-option"><input type="checkbox" value="${escapeHtml(label)}" ${targets.includes(label)?'checked':''}><span>${escapeHtml(label)}</span></label>`).join('');
+ $('goalOptions').querySelectorAll('input').forEach(el=>el.onchange=()=>{state.goals=Array.from($('goalOptions').querySelectorAll('input:checked')).map(i=>i.value);persist()});
+}
+function goalsLabel(){return (Array.isArray(state.goals)?state.goals:[]).join(' · ')||'Non renseigné'}
+function renderChips(){ $('muscleChips').innerHTML=MUSCLES.map(([id,label])=>`<button class="chip ${state.selected.includes(id)?'selected':''}" aria-pressed="${state.selected.includes(id)}" data-muscle="${id}">${label}</button>`).join('');$('selectedCount').textContent=`${state.selected.length} sélectionné${state.selected.length!==1?'s':''}`;$('muscleMetric').textContent=state.selected.length;$('muscleChips').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const m=b.dataset.muscle;state.selected=state.selected.includes(m)?state.selected.filter(x=>x!==m):[...state.selected,m];persist();renderChips();updateModel()}))}
+function renderTabs(){ $('sessionTabs').innerHTML=state.sessions.map((s,i)=>`<button class="session-tab ${i===state.active?'active':''}" data-tab="${i}">${escapeHtml(sessionLabel(i))}</button>`).join('')+'<button class="session-tab tab-add" id="addSession" title="Ajouter une séance">＋</button>';$('sessionTabs').querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{state.active=Number(b.dataset.tab);persist();renderTabs();renderItems()});$('addSession').onclick=()=>{state.sessions.push({name:`Séance ${state.sessions.length+1}`,cardio:0,items:[{name:'',details:''}]});state.active=state.sessions.length-1;persist();renderTabs();renderItems()};$('sessionCount').textContent=state.sessions.length+' SÉANCE'+(state.sessions.length>1?'S':'');$('weekInfo').textContent=state.sessions.length+' séance'+(state.sessions.length>1?'s':'')+' programmée'+(state.sessions.length>1?'s':'')}
+function renderItems(){const s=currentSession();if(!s)return;$('sessionName').value=s.name||'';$('cardioRange').value=Number(s.cardio)||0;$('cardioValue').textContent=formatCardio(s.cardio);$('cardioMetric').textContent=formatCardio(s.cardio);$('sessionItems').innerHTML=s.items.length?s.items.map((e,i)=>`<div class="item"><div class="item-top"><strong>${i+1}. Exercice / mouvement</strong><div class="item-actions"><button data-up="${i}" title="Monter" aria-label="Monter l'exercice">↑</button><button data-down="${i}" title="Descendre" aria-label="Descendre l'exercice">↓</button><button data-remove="${i}" title="Retirer" aria-label="Retirer l'exercice">✕</button></div></div><div class="item-fields"><label>Nom<input data-index="${i}" data-key="name" placeholder="Ex. Développé couché haltères" value="${escapeHtml(e.name)}"></label><label>Détails / consignes<textarea data-index="${i}" data-key="details" placeholder="Une consigne par ligne. Ex. Montée en gamme en 3 séries de 15 reps…">${escapeHtml(e.details)}</textarea></label></div></div>`).join(''):'<div class="empty"><div style="font-size:29px;margin-bottom:8px">＋</div><b>Ta séance commence ici</b>Ajoute tes exercices un par un, selon le matériel disponible dans la salle de ton élève.</div>';$('exerciseMetric').textContent=s.items.filter(x=>x.name.trim()||x.details.trim()).length;$('sessionItems').querySelectorAll('input,textarea').forEach(el=>el.oninput=()=>{const item=s.items[Number(el.dataset.index)],key=el.dataset.key;item[key]=el.value;persist();$('exerciseMetric').textContent=s.items.filter(x=>x.name.trim()||x.details.trim()).length});for(const a of ['remove','up','down'])$('sessionItems').querySelectorAll('[data-'+a+']').forEach(el=>el.onclick=()=>{const i=Number(el.dataset[a]);if(a==='remove')s.items.splice(i,1);else{const j=a==='up'?i-1:i+1;if(j<0||j>=s.items.length)return;[s.items[i],s.items[j]]=[s.items[j],s.items[i]]}if(!s.items.length)s.items.push({name:'',details:''});persist();renderItems()})}
+$('addExerciseBtn').onclick=()=>{currentSession().items.push({name:'',details:''});persist();renderItems();toast('Exercice ajouté')};
+$('sessionName').oninput=e=>{currentSession().name=e.target.value;persist();renderTabs()};
+$('cardioRange').oninput=e=>{currentSession().cardio=Number(e.target.value)||0;persist();$('cardioValue').textContent=formatCardio(currentSession().cardio);$('cardioMetric').textContent=formatCardio(currentSession().cardio)};
+$('deleteSession').onclick=()=>{if(state.sessions.length===1){toast('Conserve au moins une séance');return}if(!confirm('Supprimer cette séance et son contenu ?'))return;state.sessions.splice(state.active,1);state.active=Math.max(0,state.active-1);persist();renderTabs();renderItems()};
+function detailLines(value){return String(value||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean)}
+function bulletLinesText(value,indent='      '){return detailLines(value).map(x=>indent+'• '+x)}
+function summary(){return ['DISCIPLINE ATHLETIC — PROGRAMME D’ENTRAÎNEMENT',state.name||'Programme sans titre','Athlète : '+(state.client||'Non renseigné'),'Objectifs : '+goalsLabel()+' · Durée : '+(state.duration||'—')+' semaine(s)','Groupes musculaires : '+(state.selected.map(m=>MUSCLES.find(x=>x[0]===m)?.[1]).filter(Boolean).join(', ')||'Aucun'),' ',...state.sessions.flatMap((s,i)=>[`${i+1}. ${sessionLabel(i)}`,...s.items.filter(e=>e.name.trim()||e.details.trim()).flatMap((e,j)=>[`   ${j+1}) ${e.name||'Exercice à préciser'}`,...bulletLinesText(e.details)]),...(s.items.some(e=>e.name.trim()||e.details.trim())?[]:['   Aucun exercice renseigné']),...(state.notes?['   --------------------','   CONSIGNES MUSCULATION :',...bulletLinesText(state.notes,'   ')]:[]),'   ====================',`   ❤ CARDIO : ${formatCardio(s.cardio)}`,''])].join('\n')}
+function clearValidation(){const box=$('validationErrors');box.hidden=true;box.textContent='';document.querySelectorAll('.field-invalid').forEach(e=>e.classList.remove('field-invalid'))}
+function validateForExport(){clearValidation();const errors=[];const push=(msg,id)=>errors.push({msg,id});
+ if(!String(state.name||'').trim())push('Renseigner le nom du programme.','programName');
+ if(!String(state.client||'').trim())push('Renseigner le nom du bénéficiaire.','client');
+ if(!Array.isArray(state.goals)||state.goals.length===0)push('Sélectionner au moins un objectif.','goalOptions');
+ if(!Number.isInteger(Number(state.duration))||Number(state.duration)<1||Number(state.duration)>52)push('Indiquer une durée valide, de 1 à 52 semaines.','duration');
+ if(!Array.isArray(state.selected)||state.selected.length===0)push('Sélectionner au moins un groupe musculaire.','muscleChips');
+ if(!String(state.notes||'').trim())push('Compléter les consignes du coach (musculation).','notes');
+ state.sessions.forEach((session,i)=>{
+  if(!String(session.name||'').trim())push(`Donner un nom à la séance ${i+1}.`,'sessionName');
+  const items=session.items||[];
+  if(!items.some(e=>String(e.name||'').trim()))push(`Ajouter au moins un exercice à la séance ${i+1}.`,'sessionItems');
+  items.forEach((item,j)=>{
+   if(!String(item.name||'').trim()&&!String(item.details||'').trim())return; // Ligne laissée vierge : non incluse dans la fiche.
+   if(!String(item.name||'').trim())push(`Renseigner le nom de l’exercice ${j+1} (séance ${i+1}).`,'sessionItems');
+   if(!String(item.details||'').trim())push(`Compléter les consignes de l’exercice ${j+1} (séance ${i+1}).`,'sessionItems');
+  });
+ });
+ if(!errors.length)return true;
+ const box=$('validationErrors');box.hidden=false;box.innerHTML='<strong>Export suspendu : '+errors.length+' information'+(errors.length>1?'s':'')+' à compléter</strong><ul>'+errors.map(e=>'<li>'+escapeHtml(e.msg)+'</li>').join('')+'</ul>';
+ for(const {id} of errors){const el=$(id);if(el)el.classList.add('field-invalid')}
+ box.scrollIntoView({behavior:'smooth',block:'center'});box.focus({preventScroll:true});toast('Complète les informations obligatoires avant de partager');return false;
+}
+function filename(ext){return ((state.name||'programme-da').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60)||'programme-da')+'.'+ext}
+function download(blob,name){const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function saveJSON(){if(!validateForExport())return;download(new Blob([JSON.stringify({...state,exportedAt:new Date().toISOString()},null,2)],{type:'application/json;charset=utf-8'}),filename('json'));toast('Fichier JSON téléchargé')}
+function copySummary(){if(!validateForExport())return;const t=summary();if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(()=>toast('Programme copié dans le presse-papiers')).catch(()=>fallbackCopy(t));else fallbackCopy(t)}function fallbackCopy(t){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{document.execCommand('copy');toast('Programme copié')}catch{toast('Copie impossible : utilise la zone de partage')}x.remove()}
+function chosenViews(selected){const front=selected.some(m=>FRONT_MUSCLES.includes(m));const back=selected.some(m=>BACK_MUSCLES.includes(m));if(front&&back)return ['front','back'];if(front)return ['front'];if(back)return ['back'];return ['front','back']}
+function bodyCard(ctx,x,y,w,h,label,view,selected){ctx.save();ctx.fillStyle='#111319';ctx.strokeStyle='#2e3038';ctx.lineWidth=2;roundRect(ctx,x,y,w,h,18,true,true);ctx.fillStyle='#f4f5f8';ctx.font='bold 20px Arial';ctx.fillText(label,x+18,y+30);const cx=x+w/2, top=y+60;drawBodyPreview(ctx,cx,top,w*.62,h-82,view,selected);ctx.restore()}
+function drawBodyPreview(ctx,cx,top,bw,bh,view,selected){const s=Math.min(bw/170,bh/320);ctx.save();ctx.translate(cx,top);ctx.scale(s,s);const gray='#6c7380', light='#9399a6', red='#f32736', dark='#0b0c10';function e(x,y,rx,ry,color){ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fillStyle=color;ctx.fill()}function r(x,y,w,h,color,rad=8){ctx.beginPath();ctx.moveTo(x+rad,y);ctx.lineTo(x+w-rad,y);ctx.quadraticCurveTo(x+w,y,x+w,y+rad);ctx.lineTo(x+w,y+h-rad);ctx.quadraticCurveTo(x+w,y+h,x+w-rad,y+h);ctx.lineTo(x+rad,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-rad);ctx.lineTo(x,y+rad);ctx.quadraticCurveTo(x,y,x+rad,y);ctx.fillStyle=color;ctx.fill()}
+// base silhouette
+ e(0,18,22,24,light); e(0,57,15,16,light); e(0,102,46,38,gray); e(0,168,34,36,gray); e(0,218,30,21,gray);
+ for(const sign of [-1,1]){ e(sign*44,105,18,18,gray); e(sign*64,145,15,32,gray); e(sign*68,204,12,30,light); e(sign*71,260,11,15,light); e(sign*22,278,18,52,gray); e(sign*21,347,15,40,view==='front'?light:gray); e(sign*21,404,12,14,view==='front'?light:gray); r(sign*13-16,420,32,12,view==='front'?light:gray,4) }
+ // highlight zones
+ const has=m=>selected.includes(m);
+ if(view==='front'){
+   if(has('pectoraux')) for(const sign of [-1,1]) e(sign*22,104,22,16,red);
+   if(has('epaules')) for(const sign of [-1,1]) e(sign*44,105,18,18,red);
+   if(has('biceps')) for(const sign of [-1,1]) e(sign*57,143,10,22,red);
+   if(has('triceps')) for(const sign of [-1,1]) e(sign*69,145,8,20,red);
+   if(has('abdominaux')){ for(const sign of [-1,1]) for(let j=0;j<3;j++) e(sign*10,142+j*24,9,10,red); e(0,210,11,22,red); }
+   if(has('quadriceps')) for(const sign of [-1,1]) e(sign*22,278,18,52,red);
+   if(has('mollets')) for(const sign of [-1,1]) e(sign*21,347,15,38,red);
+ } else {
+   if(has('dos')){ e(0,115,30,48,red); for(const sign of [-1,1]) e(sign*24,138,17,34,red); }
+   if(has('epaules')) for(const sign of [-1,1]) e(sign*44,105,18,18,red);
+   if(has('triceps')) for(const sign of [-1,1]) e(sign*56,145,11,22,red);
+   if(has('fessiers')) for(const sign of [-1,1]) e(sign*18,222,18,16,red);
+   if(has('ischios')) for(const sign of [-1,1]) e(sign*21,292,15,46,red);
+   if(has('mollets')) for(const sign of [-1,1]) e(sign*21,347,15,38,red);
+ }
+ ctx.restore();
+}
+function roundRect(ctx,x,y,w,h,r,fill,stroke){if(w<2*r)r=w/2;if(h<2*r)r=h/2;ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill)ctx.fill();if(stroke)ctx.stroke()}
+function makePNG(){if(!validateForExport())return;
+ const c=document.createElement('canvas'),ctx=c.getContext('2d'),W=1200,p=58,width=W-p*2;
+ const views=chosenViews(state.selected),fontBody='17px Arial';
+ function fitted(text,font,max){ctx.font=font;return wrap(ctx,text,max)}
+ const titleLines=fitted(state.name,'bold 34px Arial',width);
+ const athleteLines=fitted('ATHLÈTE : '+state.client,'18px Arial',width);
+ const objectiveLines=fitted('OBJECTIFS : '+goalsLabel(),'18px Arial',width);
+ const groupsLines=fitted('GROUPES CIBLÉS : '+state.selected.map(m=>MUSCLES.find(x=>x[0]===m)?.[1]).filter(Boolean).join(', '),'18px Arial',width);
+ const sessions=state.sessions.map((s,i)=>({name:sessionLabel(i),cardio:s.cardio,items:s.items.filter(e=>e.name.trim()||e.details.trim()).map((e,j)=>({name:fitted(`${j+1}. ${e.name}`,'bold 18px Arial',width-20),details:detailLines(e.details).flatMap(line=>fitted('• '+line,'16px Arial',width-48))})),coach:detailLines(state.notes).flatMap(line=>fitted('• '+line,fontBody,width-28))}));
+ // Tous les blocs mesurés avant l'export : aucun texte ni contenu tronqué.
+ let H=155+titleLines.length*40+8+(athleteLines.length+objectiveLines.length+groupsLines.length+1)*29+31+28+310;
+ for(const se of sessions){H+=36;for(const item of se.items)H+=item.name.length*25+item.details.length*23+15;H+=8+29+28+se.coach.length*25+12+16+30+48+30;}
+ H=Math.max(H+80,920);c.width=W;c.height=H;
+ ctx.fillStyle='#0b0c10';ctx.fillRect(0,0,W,H);ctx.fillStyle='#f32736';ctx.fillRect(0,0,W,10);
+ ctx.fillStyle='#f32736';ctx.font='900 28px Arial';ctx.fillText('DA',p,70);ctx.fillStyle='#f5f5f5';ctx.font='bold 18px Arial';ctx.fillText('DISCIPLINE ATHLETIC',p+64,66);ctx.fillStyle='#8c8f9b';ctx.font='16px Arial';ctx.fillText('FICHE DE PROGRAMME',p,104);
+ let y=155;ctx.fillStyle='#fff';ctx.font='bold 34px Arial';for(const line of titleLines){ctx.fillText(line,p,y);y+=40}y+=8;
+ ctx.fillStyle='#b8bcc5';ctx.font='18px Arial';for(const lines of [athleteLines,objectiveLines,[`DURÉE : ${state.duration} semaine(s)`],groupsLines])for(const line of lines){ctx.fillText(line,p,y);y+=29}
+ y+=3;ctx.strokeStyle='#343845';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p,y);ctx.lineTo(W-p,y);ctx.stroke();y+=28;
+ if(views.length===2){const half=(width-20)/2;bodyCard(ctx,p,y,half,280,'Vue face','front',state.selected);bodyCard(ctx,p+half+20,y,half,280,'Vue dos','back',state.selected)}else bodyCard(ctx,p,y,width,280,views[0]==='front'?'Vue face':'Vue dos',views[0],state.selected);
+ y+=310;
+ sessions.forEach((se,idx)=>{
+  ctx.fillStyle='#f32736';ctx.font='bold 24px Arial';ctx.fillText(`${String(idx+1).padStart(2,'0')} / ${se.name}`.slice(0,65),p,y);y+=36;
+  for(const item of se.items){
+   ctx.fillStyle='#f2f2f4';ctx.font='bold 18px Arial';for(const line of item.name){ctx.fillText(line,p+10,y);y+=25}
+   ctx.fillStyle='#adb2be';ctx.font='16px Arial';for(const line of item.details){ctx.fillText(line,p+28,y);y+=23}y+=15;
+  }
+  y+=8;ctx.strokeStyle='#464b57';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p,y);ctx.lineTo(W-p,y);ctx.stroke();y+=29;
+  ctx.fillStyle='#f32736';ctx.font='bold 20px Arial';ctx.fillText('CONSIGNES DU COACH · MUSCULATION',p,y);y+=28;
+  ctx.fillStyle='#b6b8c1';ctx.font=fontBody;for(const line of se.coach){ctx.fillText(line,p+8,y);y+=25}y+=12;
+  y+=16;ctx.strokeStyle='#464b57';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(p,y);ctx.lineTo(W-p,y);ctx.stroke();y+=30;
+  const hx=p+20,hy=y+6;ctx.save();ctx.translate(hx,hy);ctx.scale(1.1,1.1);ctx.beginPath();ctx.moveTo(0,14);ctx.bezierCurveTo(-43,-12,-18,-29,0,-11);ctx.bezierCurveTo(18,-29,43,-12,0,14);ctx.closePath();ctx.fillStyle='#f32736';ctx.fill();ctx.restore();
+  ctx.fillStyle='#f8f8fa';ctx.font='bold 25px Arial';ctx.fillText('CARDIO',p+64,y+8);ctx.fillStyle='#ff5262';ctx.font='bold 28px Arial';ctx.textAlign='right';ctx.fillText(formatCardio(se.cardio),W-p,y+9);ctx.textAlign='left';y+=78;
+ });
+ ctx.fillStyle='#686b75';ctx.font='16px Arial';ctx.fillText('DISCIPLINE ATHLETIC · PROGRAMME PERSONNALISÉ',p,H-42);
+ c.toBlob(blob=>{if(blob){download(blob,filename('png'));toast('Fiche PNG téléchargée')}},'image/png');
+}
+function wrap(ctx,text,max){
+ const words=String(text).split(/\s+/),arr=[];let line='';
+ function addWord(word){
+  if(ctx.measureText(word).width<=max){line=word;return;}
+  let piece='';
+  for(const char of word){if(piece&&ctx.measureText(piece+char).width>max){arr.push(piece);piece=char}else piece+=char;}
+  line=piece;
+ }
+ for(const word of words){
+  const candidate=line?line+' '+word:word;
+  if(ctx.measureText(candidate).width<=max){line=candidate;continue;}
+  if(line){arr.push(line);line='';}
+  addWord(word);
+ }
+ if(line)arr.push(line);
+ return arr;
+}
+$('saveBtn').onclick=saveJSON;$('copyBtn').onclick=copySummary;$('imageBtn').onclick=makePNG;$('printBtn').onclick=()=>{if(validateForExport())window.print()};$('importBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=async e=>{const file=e.target.files[0];if(!file)return;if(file.size>2e6){toast('Fichier trop volumineux');return}try{const obj=JSON.parse(await file.text());if(!valid(obj))throw Error('Structure non reconnue');state={...fresh(),...obj,goals:Array.isArray(obj.goals)?obj.goals.filter(g=>GOALS.includes(g)):(obj.goal&&GOALS.includes(obj.goal)?[obj.goal]:[]),active:Math.max(0,Math.min(Number(obj.active)||0,obj.sessions.length-1)),selected:(obj.selected||[]).filter(m=>MUSCLES.some(x=>x[0]===m)),sessions:(obj.sessions||[]).map((s,i)=>({name:typeof s.name==='string'?s.name:`Séance ${i+1}`,cardio:Number(s.cardio)||0,items:Array.isArray(s.items)&&s.items.length?s.items.map(it=>({name:String(it.name||''),details:String(it.details||'')})):[{name:'',details:''}]}))};persist();syncForm();toast('Programme importé avec succès')}catch(err){console.error(err);toast('JSON invalide ou incompatible')}e.target.value=''};
+function openShare(){if(!validateForExport())return;$('shareText').value=summary();$('shareModal').classList.add('open');$('closeModal').focus()}function closeShare(){$('shareModal').classList.remove('open')}$('shareBtn').onclick=$('shareTop').onclick=openShare;$('closeModal').onclick=closeShare;$('shareModal').onclick=e=>{if(e.target===$('shareModal'))closeShare()};document.onkeydown=e=>{if(e.key==='Escape')closeShare()};$('modalPng').onclick=makePNG;$('modalJson').onclick=saveJSON;$('modalCopy').onclick=copySummary;$('newBtn').onclick=()=>{if(confirm('Créer un nouveau programme ? Le programme actuel sera remplacé sur cet appareil. Pense à exporter le JSON si tu souhaites le conserver.')){state=fresh();persist();syncForm();toast('Nouveau programme créé')}};
+let modelUpdater=()=>{};function updateModel(){modelUpdater(state.selected)}
+syncForm();
+</script>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+const canvas=document.getElementById('bodyCanvas');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(32,1,.1,100);camera.position.set(0,-.05,9.8);
+const hemi=new THREE.HemisphereLight('#dfe4ef','#3f2430',2.2);scene.add(hemi);
+const key=new THREE.DirectionalLight('#ffffff',3);key.position.set(3,6,6);scene.add(key);
+const rim=new THREE.DirectionalLight('#ff566a',2.5);rim.position.set(-4,3,-5);scene.add(rim);
+const body=new THREE.Group();body.position.y=.12;scene.add(body);
+const matBase=new THREE.MeshStandardMaterial({color:'#646b79',roughness:.62,metalness:.18});
+const matLight=new THREE.MeshStandardMaterial({color:'#9298a5',roughness:.58,metalness:.15});
+const matRed=new THREE.MeshStandardMaterial({color:'#fb293c',emissive:'#a8091b',emissiveIntensity:.24,roughness:.42,metalness:.2});
+const named=[];
+const ballGeometry=new THREE.SphereGeometry(1,26,18);
+function ell(name,g,x,y,z,sx,sy,sz,rot=0,material=matBase){const mesh=new THREE.Mesh(ballGeometry,material);mesh.position.set(x,y,z);mesh.scale.set(sx,sy,sz);mesh.rotation.z=rot;body.add(mesh);if(g)named.push({mesh,group:g});return mesh}
+ell('head',null,0,2.13,0,.31,.4,.29,0,matLight);ell('neck',null,0,1.72,0,.19,.25,.2,0,matLight);
+ell('chestBase',null,0,1.15,0,.75,.68,.31);ell('abdBase',null,0,.38,0,.51,.58,.26);ell('pelvis',null,0,-.19,0,.52,.36,.29);
+for(let sign of [-1,1]){
+ ell('trap','dos',sign*.35,1.52,-.12,.38,.19,.19,-sign*.26);
+ ell('pectoral','pectoraux',sign*.36,1.29,.27,.36,.25,.19,-sign*.13);
+ ell('shoulder','epaules',sign*.79,1.35,0,.29,.33,.31,sign*.24);
+ ell('biceps','biceps',sign*.96,.83,.06,.20,.36,.20,-sign*.13);
+ ell('triceps','triceps',sign*.97,.82,-.20,.19,.35,.19,-sign*.13);
+ ell('forearm',null,sign*1.08,.20,0,.18,.38,.18,sign*.13,matLight);
+ ell('hand',null,sign*1.17,-.19,.02,.15,.20,.13,0,matLight);
+ ell('lat','dos',sign*.52,.83,-.23,.29,.53,.19,-sign*.13);
+ ell('glute','fessiers',sign*.29,-.23,-.21,.29,.30,.22);
+ ell('quad','quadriceps',sign*.32,-.78,.14,.28,.62,.26,-sign*.06);
+ ell('ham','ischios',sign*.32,-.85,-.17,.25,.56,.22,sign*.06);
+ ell('knee',null,sign*.32,-1.43,.02,.22,.20,.22,0,matLight);
+ ell('calf','mollets',sign*.32,-1.91,-.12,.21,.45,.20,sign*.05);
+ ell('shin',null,sign*.32,-1.93,.12,.14,.40,.15,0,matLight);
+ ell('foot',null,sign*.32,-2.38,.20,.23,.14,.40,0,matLight);
+ for(let j=0;j<3;j++)ell('abs','abdominaux',sign*.15,.80-j*.25,.28,.145,.14,.12);
+}
+ell('spine','dos',0,.48,-.29,.19,.72,.12);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(1.9,48),new THREE.MeshBasicMaterial({color:'#f12739',transparent:true,opacity:.09,depthWrite:false}));floor.rotation.x=-Math.PI/2;floor.position.y=-2.58;scene.add(floor);
+modelUpdater=(selected)=>{for(const {mesh,group} of named)mesh.material=selected.includes(group)?matRed:matBase};updateModel();
+let spin=0.18,dragging=false,last=0;canvas.addEventListener('pointerdown',e=>{dragging=true;last=e.clientX;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);canvas.addEventListener('pointermove',e=>{if(!dragging)return;spin+=(e.clientX-last)*.012;last=e.clientX});document.getElementById('frontBtn').onclick=()=>spin=0;document.getElementById('backBtn').onclick=()=>spin=Math.PI;
+function resize(){const r=canvas.getBoundingClientRect();renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix()}const ro=new ResizeObserver(resize);ro.observe(canvas);resize();let lastTime=performance.now();function tick(time){const dt=Math.min((time-lastTime)/1000,.05);lastTime=time;if(document.getElementById('rotate').checked&&!dragging)spin+=dt*.26;body.rotation.y=spin;renderer.render(scene,camera);requestAnimationFrame(tick)}requestAnimationFrame(tick);document.getElementById('modelStatus').textContent='● MODÈLE 3D INTERACTIF';
+</script>
+</body></html>
